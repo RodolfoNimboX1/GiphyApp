@@ -46,11 +46,11 @@ for (var i = 0; i < 10; i++) {
     console.log(rating);
     var title = $("<p>").text("Title: "+ajaxResponse[i].title);
     var GIF = $("<img>");
-    GIF.attr("src", ajaxResponse[i].images.fixed_height.url);
-    GIF.attr("class", "gif");
-    GIF.attr("data-still", ajaxResponse[i].images.fixed_height.url);
-    GIF.attr("data-animate", ajaxResponse[i].images.fixed_height.url);
+    GIF.attr("src", ajaxResponse[i].images["480w_still"].url);
+    GIF.attr("id", "gif");
     GIF.attr("data-state", "still");
+    GIF.attr("data-still", ajaxResponse[i].images["480w_still"].url);
+    GIF.attr("data-animate", ajaxResponse[i].images.fixed_height.url);
     console.log(GIF);
     seriesGIF.append(rating);
     seriesGIF.append(title);
@@ -59,10 +59,32 @@ for (var i = 0; i < 10; i++) {
 
     $("#load-gif").prepend(seriesGIF);
 
+    // still GIF's and move on click
+$("#gif").on("click", function(){
+var state = $(this).attr("data-state");
+
+if (state == "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+} else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+}
+});
+};
+});
 };
 
+// add new buttons and GIF's
+
+$("#add-gif").on("click", function(event){
+    event.preventDefault();
+    
+    var newGIF = $("#gif-input").val().trim();
+    
+    animatedSeries.push(newGIF);
+    renderSeries ();
 });
 
-};
 
 renderSeries ();
