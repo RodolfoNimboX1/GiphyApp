@@ -48,6 +48,7 @@ for (var i = 0; i < 10; i++) {
     var GIF = $("<img>");
     GIF.attr("src", ajaxResponse[i].images["480w_still"].url);
     GIF.attr("id", "gif");
+    GIF.attr("class", "img-fluid");
     GIF.attr("data-state", "still");
     GIF.attr("data-still", ajaxResponse[i].images["480w_still"].url);
     GIF.attr("data-animate", ajaxResponse[i].images.fixed_height.url);
@@ -56,6 +57,12 @@ for (var i = 0; i < 10; i++) {
     seriesGIF.append(title);
     seriesGIF.append(GIF);
     console.log(seriesGIF);
+    // download GIF
+    var download = $("<a>").text("Download GIF");
+    download.attr("id", "download");
+    download.attr("value", "download");
+    download.attr("href", ajaxResponse[i].images.fixed_height.url);
+    seriesGIF.append(download);
 
     $("#load-gif").prepend(seriesGIF);
 
